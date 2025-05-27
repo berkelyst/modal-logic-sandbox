@@ -19,3 +19,8 @@ function isDiamondPTrue(world, proposition) {
 // Exemples
 console.log("◇p est vrai en w1 :", isDiamondPTrue("w1", "p")); // true
 console.log("◇p est vrai en w3 :", isDiamondPTrue("w3", "p")); // false
+const model = {
+  w1: { accessible: ["w2", "w3"], propositions: [] },
+  w2: { accessible: [], propositions: ["p"] },
+  w3: { accessible: [], propositions: [] }
+};
