@@ -52,5 +52,49 @@ Object.entries(worlds).forEach(([name, data]) =>
 );
     );
   </script>
+  <h2>Tableau de vérité modale</h2>
+<table border="1" cellpadding="5" id="truth-table">
+  <thead>
+    <tr>
+      <th>Formule</th>
+      <th>w1</th>
+      <th>w2</th>
+      <th>w3</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+const truthTable = document.getElementById("truth-table").querySelector("tbody");
+
+const formulas = [
+  { label: "□p", fn: w => isBoxPTrue(w, "p") },
+  { label: "◇p", fn: w => isDiamondPTrue(w, "p") },
+  { label: "¬□p", fn: w => !isBoxPTrue(w, "p") },
+  { label: "◇¬p", fn: w => isDiamondNotPTrue(w, "p") },
+  { label: "□(p → q)", fn: w => isBoxImplies(w, "p", "q") }
+];
+
+const worldNames = ["w1", "w2", "w3"];
+
+formulas.forEach(({ label, fn }) => {
+  const row = document.createElement("tr");
+  const labelCell = document.createElement("td");
+  labelCell.textContent = label;
+  row.appendChild(labelCell);
+
+  worldNames.forEach(w => {
+    const cell = document.createElement("td");
+    const result = fn(w);
+    cell.textContent = result ? "✔️" : "❌";
+    cell.style.backgroundColor = result ? "#a4e3a4" : "#f4cccc";
+    row.appendChild(cell);
+  });
+
+  truthTable.appendChild(row);
+});
+</script>
 </body>
 </html>
