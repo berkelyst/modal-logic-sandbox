@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Kripke Model</title>
+</head>
+<body>
+  <canvas id="canvas" width="500" height="300"></canvas>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const worlds = {
+      w1: { x: 100, y: 150, props: [] },
+      w2: { x: 250, y: 80, props: ["p"] },
+      w3: { x: 250, y: 220, props: [] }
+    };
+
+    const arrows = [
+      ["w1", "w2"],
+      ["w1", "w3"]
+    ];
+
+    function drawWorld(name, x, y, hasP) {
+      ctx.beginPath();
+      ctx.arc(x, y, 30, 0, 2 * Math.PI);
+      ctx.fillStyle = hasP ? "#a4e3a4" : "#f4cccc";
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#000";
+      ctx.fillText(name, x - 10, y + 5);
+    }
+
+    function drawArrow(from, to) {
+      const [x1, y1] = [worlds[from].x, worlds[from].y];
+      const [x2, y2] = [worlds[to].x, worlds[to].y];
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    arrows.forEach(([from, to]) => drawArrow(from, to));
+    Object.entries(worlds).forEach(([name, data]) =>
+      drawWorld(name, data.x, data.y, data.props.includes("p"))
+    );
+  </script>
+</body>
+</html>
