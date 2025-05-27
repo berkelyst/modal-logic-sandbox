@@ -36,3 +36,10 @@ const model = {
   w2: { accessible: [], propositions: ["q"] },
   w3: { accessible: [], propositions: [] }
 };
+function isDiamondNotPTrue(world, proposition) {
+  const accessibleWorlds = model[world].accessible;
+  return accessibleWorlds.some(w => !model[w].propositions.includes(proposition));
+}
+
+// Test
+console.log("◇¬p est vrai en w1 :", isDiamondNotPTrue("w1", "p"));
