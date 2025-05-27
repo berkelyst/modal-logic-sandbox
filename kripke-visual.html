@@ -42,7 +42,14 @@
 
     arrows.forEach(([from, to]) => drawArrow(from, to));
     Object.entries(worlds).forEach(([name, data]) =>
-      drawWorld(name, data.x, data.y, data.props.includes("p"))
+      const isDiamondNotPTrue = (world, proposition) => {
+  const accessibleWorlds = worlds[world].accessible || [];
+  return accessibleWorlds.some(w => !worlds[w].props.includes(proposition));
+};
+
+Object.entries(worlds).forEach(([name, data]) =>
+  drawWorld(name, data.x, data.y, isDiamondNotPTrue(name, "p"))
+);
     );
   </script>
 </body>
